@@ -11,10 +11,10 @@ class HomePageTest(TestCase):
     
     # 2. make sure correct html is returned
     def test_home_page_returns_correct_html(self):
-        request = HttpRequest()
-        response = home_page(request)
+        response = self.client.get('/')
+
         html = response.content.decode('utf8')
-        
         self.assertTrue(html.startswith('<html>'))
         self.assertIn('<title>To-Do lists</title>', html)
         self.assertTrue(html.endswith('</html>'))
+        self.assertTemplateUsed(response, 'home.html')
